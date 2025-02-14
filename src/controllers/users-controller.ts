@@ -1,18 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 class UsersController {
     async index(request: Request, response: Response) {
         return response.json();
     }
 
-    async create(request: Request, response: Response, next: NextFunction) {
-        try {
-            throw new Error("Deu erro");
-
-            return response.status(201).json();
-        } catch (error) {
-            next(error);
-        }
+    async create(request: Request, response: Response) {
+        return response.status(201).json();
     }
 
     async show(request: Request, response: Response) {
