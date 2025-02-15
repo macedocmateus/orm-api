@@ -18,7 +18,31 @@ class UsersController {
         return response.status(201).json();
     }
 
-    async show(request: Request, response: Response) {}
+    async show(request: Request, response: Response) {
+        const { id } = request.params;
+
+        // Função parecida com select com where id do sql ou knex list id do query builder porem em orm com prisma em modelo de objeto
+        const user = await prisma.user.findUnique({ where: { id } });
+
+        return response.json(user);
+    }
+
+    async update(request: Request, response: Response) {
+        const { name, email } = request.body;
+        const { id } = request.params;
+
+        await prisma.user.update({ where: { id }, data: { name, email } });
+
+        return response.json();
+    }
+
+    async remove(request: Request, response: Response) {
+        const { id } = request.params;
+
+        const user = await prisma.user.delete({ where: { id } });
+
+        return response.json();
+    }
 }
 
 export { UsersController };
