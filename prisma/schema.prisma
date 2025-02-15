@@ -6,3 +6,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Representação da tabela em modelo objeto
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+
+  // A tabela users traduzida para sql
+  @@map("users")
+}
