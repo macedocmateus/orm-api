@@ -43,6 +43,15 @@ class UsersController {
 
         return response.json();
     }
+
+    async updateEmail(request: Request, response: Response) {
+        const { email } = request.body;
+        const { id } = request.params;
+
+        await prisma.user.update({ where: { id }, data: { email } });
+
+        return response.json();
+    }
 }
 
 export { UsersController };
