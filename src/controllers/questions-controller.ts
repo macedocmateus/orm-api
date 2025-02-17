@@ -1,21 +1,32 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
+import { prisma } from "../prisma";
 
 class QuestionsController {
-  async index(request: Request, response: Response) {
-    return response.json()
-  }
+    async index(request: Request, response: Response) {
+        return response.json();
+    }
 
-  async create(request: Request, response: Response) {
-    return response.status(201).json()
-  }
+    async create(request: Request, response: Response) {
+        const { title, content, user_id } = request.body;
 
-  async update(request: Request, response: Response) {
-    return response.json()
-  }
+        await prisma.question.create({
+            data: {
+                title,
+                content,
+                userId: user_id,
+            },
+        });
 
-  async remove(request: Request, response: Response) {
-    return response.json()
-  }
+        return response.status(201).json();
+    }
+
+    async update(request: Request, response: Response) {
+        return response.json();
+    }
+
+    async remove(request: Request, response: Response) {
+        return response.json();
+    }
 }
 
-export { QuestionsController }
+export { QuestionsController };
