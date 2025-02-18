@@ -3,9 +3,21 @@ import { prisma } from "../prisma";
 
 class QuestionsController {
     async index(request: Request, response: Response) {
-        const questions = await prisma.question.findMany();
+        const questions = await prisma.question.findMany({
+            // Para fazer consulta com filtros, filtrando pelo titulo e colocamos mode para ignorar a diferença entre maiúscula e minuscula.
+            where: {
+                title: {
+                    contains: request.query.title?.toString().trim(),
+                    mode: "insensitive",
+                },
+            },
+            // Deixando em ordem alfabética
+            orderBy: {
+                title: "asc",
+            },
+        });
 
-        return response.json(questions);
+        return response.json({ questions });
     }
 
     async create(request: Request, response: Response) {
